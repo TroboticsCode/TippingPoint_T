@@ -44,10 +44,10 @@ void userDrive(void);
   extern motor BackLeft;
   extern motor BackRight;
 
-  #define FrontLeftPort     PORT10
-  #define FrontRightPort    PORT20
-  #define BackLeftPort      PORT1
-  #define BackRightPort     PORT5
+  #define FrontLeftPort     PORT8
+  #define FrontRightPort    PORT9
+  #define BackLeftPort      PORT3
+  #define BackRightPort     PORT1
 
 #elif defined(CHASSIS_2_MOTOR_INLINE)
   extern motor DriveLeft;
@@ -116,7 +116,7 @@ void userDrive(void);
 //#define GEAR_SET    BLUE
 #define GEAR_SET    GREEN
 
-#define PID
+//#define PID
 //#define GYRO
 
 #ifdef PID

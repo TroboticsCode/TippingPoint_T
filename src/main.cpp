@@ -38,6 +38,11 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
+LifterMotorL.setVelocity(100, percent);
+LifterMotorR.setVelocity(100, percent);
+LifterMotorL.setPosition(0, degrees);
+LifterMotorR.setPosition(0, degrees);
+
   Controller1.ButtonR1.pressed(cycle_autons);
   Brain.Screen.pressed(cycle_autons);
   return;
