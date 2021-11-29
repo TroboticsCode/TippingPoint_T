@@ -1,7 +1,7 @@
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// Inertial12           inertial      12              
+// Inertial12           inertial      12
 // ---- END VEXCODE CONFIGURED DEVICES ----
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
@@ -12,11 +12,10 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-
-#include "vex.h"
 #include "Autons.h"
-#include "Functions.h"
 #include "DriveFunctionsConfig.h"
+#include "Functions.h"
+#include "vex.h"
 
 using namespace vex;
 
@@ -35,33 +34,30 @@ competition Competition;
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void pre_auton(void) 
-{
+void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  
+
   Controller1.ButtonR1.pressed(cycle_autons);
   Brain.Screen.pressed(cycle_autons);
   return;
 }
 
-void autonomous(void) 
-{
- switch (state)
-  {
-    case NONE:
+void autonomous(void) {
+  switch (state) {
+  case NONE:
     break;
 
-    case AutonR:    
-      Auton1();
+  case AutonR:
+    Auton1();
     break;
 
-    case AutonB:
-  
+  case AutonB:
+
     break;
-          
-    // Default = NO autonomous
-    default:
+
+  // Default = NO autonomous
+  default:
     break;
   }
 }
@@ -75,22 +71,61 @@ void autonomous(void)
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void usercontrol(void) { 
-  //add local user control variables here:
+void usercontrol(void) {
+  // add local user control variables here:
 
-  //User control code here, inside the loop:
-  //remove existing demo code and replace with you own! Then remove this comment
+  // User control code here, inside the loop:
+  // remove existing demo code and replace with you own! Then remove this
+  // comment
   while (1) {
     Controller1.ButtonY.pressed(autonomous);
 
-    //leave the drive code here, it should work if you set up 
+    // leave the drive code here, it should work if you set up
     // DriveFunctionsConfig.h properly
     userDrive();
 
-    wait(20, msec); // Sleep the task for a short amount of time to
-  }
-}
+    LifterMotorL.setStopping(hold);
+    LifterMotorR.setStopping(hold);
+    PincherMotor.setStopping(hold);
+    ForkLiftMotor.setStopping(hold);
+    LifterMotorL.setVelocity(100, percent);
+    LifterMotorR.setVelocity(100, percent);
+    PincherMotor.setVelocity(50, percent);
+    ForkLiftMotor.setVelocity(100, percent);
 
+    if (Controller1.ButtonL2.pressing()) {
+      PincherMotor.spin(forward);
+    } else if (Controller1.ButtonL1.pressing()) {
+      PincherMotor.spin(reverse);
+    } else {
+      PincherMotor.stop();
+    }
+
+    if (Controller1.ButtonX.pressing()) {
+      ForkLiftMotor.spin(forward);
+    } else if (Controller1.ButtonB.pressing()) {
+      ForkLiftMotor.spin(reverse);
+    } else {
+      ForkLiftMotor.stop();
+    }
+
+    if (Controller1.ButtonR2.pressing()) {
+      LifterMotorL.spin(forward);
+      LifterMotorR.spin(forward);
+    } else if (Controller1.ButtonR1.pressing()) {
+      LifterMotorL.spin(reverse);
+      LifterMotorR.spin(reverse);
+    } else {
+      LifterMotorL.stop();
+      LifterMotorR.stop();
+    }
+
+    wait(20, msec); // Sleep the task for a short amount of time to
+                    // prevent wasted resources.
+  }
+
+  wait(20, msec); // Sleep the task for a short amount of time to
+}
 
 // Main will set up the competition functions and callbacks.
 
