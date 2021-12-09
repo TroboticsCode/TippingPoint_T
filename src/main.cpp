@@ -98,32 +98,53 @@ void usercontrol(void) {
     PincherMotor.setVelocity(50, percent);
     ForkLiftMotor.setVelocity(100, percent);
 
-    if (Controller1.ButtonL2.pressing()) {
+    if (Controller1.ButtonL2.pressing()) 
+    {
       PincherMotor.spin(reverse);
-    } else if (Controller1.ButtonL1.pressing()) {
+    } 
+    else if (Controller1.ButtonL1.pressing()) 
+    {
       PincherMotor.spin(forward);
-    } else {
+    } 
+    else 
+    {
       PincherMotor.stop();
     }
 
-    if (Controller1.ButtonX.pressing()) {
+    if (Controller1.ButtonX.pressing()) 
+    {
       ForkLiftMotor.spin(forward);
-    } else if (Controller1.ButtonB.pressing()) {
+    } 
+    else if (Controller1.ButtonB.pressing()) 
+    {
       ForkLiftMotor.spin(reverse);
-    } else {
+    } 
+    else 
+    {
       ForkLiftMotor.stop();
     }
 
-    if (Controller1.ButtonR2.pressing()) {
+    //lift control
+    if (Controller1.ButtonR2.pressing() && armPot.value(range10bit) > 355) //down
+    {
       LifterMotorL.spin(forward);
       LifterMotorR.spin(forward);
-    } else if (Controller1.ButtonR1.pressing()) {
+    } 
+    else if (Controller1.ButtonR1.pressing() && armPot.value(range10bit) < 775) //up
+    {
       LifterMotorL.spin(reverse);
       LifterMotorR.spin(reverse);
-    } else {
+    } 
+    else 
+    {
       LifterMotorL.stop();
       LifterMotorR.stop();
     }
+
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print("Arm Pot Value: ");
+    Brain.Screen.print(armPot.value(range10bit));
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

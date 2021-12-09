@@ -18,6 +18,7 @@
 
 #include "v5.h"
 #include "v5_vcs.h"
+#include "vex_triport.h"
 
 #include "robot-config.h"
 
