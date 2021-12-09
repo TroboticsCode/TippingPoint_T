@@ -20,3 +20,15 @@ void Arm(int angle)
   LifterMotorL.stop();
   LifterMotorR.stop();
 }
+
+void claw(bool open)
+{
+  if(open)
+  {
+    PincherMotor.rotateTo(0, degrees, false);
+  }
+  else
+  {
+    PincherMotor.rotateTo(90, degrees, false);
+  }
+}

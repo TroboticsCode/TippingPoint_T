@@ -10,5 +10,5 @@
 //drive function prototypes can go here but they should be in the DriveFunctions.h file
 void testPID(void);
 void Arm(int angle);
-
+void claw(bool open);
 #endif

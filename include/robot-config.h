@@ -12,7 +12,7 @@ extern motor LifterMotorL;
 extern motor LifterMotorR;
 extern motor ForkLiftMotor;
 extern motor PincherMotor;
-
+//extern bumper clawBumper;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Text.

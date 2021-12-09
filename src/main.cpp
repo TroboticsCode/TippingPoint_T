@@ -58,7 +58,7 @@ void autonomous(void) {
     break;
 
   case AutonB:
-
+    Auton2();
     break;
 
   // Default = NO autonomous
@@ -99,9 +99,9 @@ void usercontrol(void) {
     ForkLiftMotor.setVelocity(100, percent);
 
     if (Controller1.ButtonL2.pressing()) {
-      PincherMotor.spin(forward);
-    } else if (Controller1.ButtonL1.pressing()) {
       PincherMotor.spin(reverse);
+    } else if (Controller1.ButtonL1.pressing()) {
+      PincherMotor.spin(forward);
     } else {
       PincherMotor.stop();
     }

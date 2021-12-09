@@ -95,7 +95,7 @@ void userDrive(void);
 * this is not the same as the motor gear set
 * Leave as 1 if you have a direct drive
 */
-#define GEAR_RATIO 1.0f
+#define GEAR_RATIO 1.4f
 
 /*     ROTATION_FACTOR 
  * this is a constant ratio

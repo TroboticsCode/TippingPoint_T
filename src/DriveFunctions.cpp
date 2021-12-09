@@ -8,10 +8,10 @@
 using namespace vex;
 
 #ifdef CHASSIS_4_MOTOR_INLINE
-  motor FrontLeft = motor(FrontLeftPort, GEAR_SET, false);
-  motor BackLeft = motor(BackLeftPort, GEAR_SET, false);
-  motor FrontRight = motor(FrontRightPort, GEAR_SET, true);
-  motor BackRight = motor(BackRightPort, GEAR_SET, true);
+  motor FrontLeft = motor(FrontLeftPort, GEAR_SET, true);
+  motor BackLeft = motor(BackLeftPort, GEAR_SET, true);
+  motor FrontRight = motor(FrontRightPort, GEAR_SET, false);
+  motor BackRight = motor(BackRightPort, GEAR_SET, false);
 
 #elif defined(CHASSIS_2_MOTOR_INLINE)
   motor DriveLeft = motor(DriveLeftPort, GEAR_SET, false);
@@ -293,8 +293,8 @@ void moveRotate(int16_t degrees, int velocity, uint32_t timeOut)
   #ifdef CHASSIS_4_MOTOR_INLINE
     FrontLeft.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
     BackLeft.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
-    FrontRight.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
-    BackRight.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
+    FrontRight.rotateFor(-rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
+    BackRight.rotateFor(-rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
 
   #elif defined CHASSIS_2_MOTOR_INLINE
     DriveRight.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
