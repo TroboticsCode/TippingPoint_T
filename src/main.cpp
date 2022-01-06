@@ -100,16 +100,12 @@ void usercontrol(void) {
 
     if (Controller1.ButtonL2.pressing()) 
     {
-      PincherMotor.spin(reverse);
+      pClaw(true);
     } 
     else if (Controller1.ButtonL1.pressing()) 
     {
-      PincherMotor.spin(forward);
+      pClaw(false);
     } 
-    else 
-    {
-      PincherMotor.stop();
-    }
 
     if (Controller1.ButtonX.pressing()) 
     {

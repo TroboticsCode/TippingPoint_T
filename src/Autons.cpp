@@ -29,7 +29,7 @@ void Auton1()
   wait(1, seconds);
   moveLinear(43, 45, 3000); // moves towards the goal ...
   wait(0, seconds);
-  claw(false); // for some reason should grab a goal
+  //claw(); // for some reason should grab a goal
   moveLinear(-78, 60, 3000); // moves the grabbed goal away to score more points probably
 
 }

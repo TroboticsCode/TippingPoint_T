@@ -11,7 +11,7 @@ void testPID() {
   wait(20, msec); // Sleep the task for a short amount of time t
 }
 
-void Arm(int angle) 
+void arm(int angle) 
 {
   float motorRotation = angle * -7;
   LifterMotorL.rotateTo(motorRotation, degrees, false);
@@ -26,9 +26,15 @@ void claw(bool open)
   if(open)
   {
     PincherMotor.rotateTo(0, degrees, false);
+    
   }
   else
   {
     PincherMotor.rotateTo(90, degrees, false);
   }
+}
+
+void pClaw(bool open)
+{
+  Pincher.set(open);
 }

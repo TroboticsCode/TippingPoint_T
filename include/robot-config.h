@@ -12,6 +12,7 @@ extern motor LifterMotorL;
 extern motor LifterMotorR;
 extern motor ForkLiftMotor;
 extern motor PincherMotor;
+extern pneumatics Pincher;
 
 extern pot armPot;
 //extern bumper clawBumper;

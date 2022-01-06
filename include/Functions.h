@@ -9,6 +9,7 @@
 //lift, claw, etc
 //drive function prototypes can go here but they should be in the DriveFunctions.h file
 void testPID(void);
-void Arm(int angle);
+void arm(int angle);
 void claw(bool open);
+void pClaw(bool open);
 #endif

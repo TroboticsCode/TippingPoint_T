@@ -14,6 +14,7 @@ motor LifterMotorL = motor(PORT4, GREEN, false);
 motor LifterMotorR = motor(PORT2, GREEN, true);
 motor ForkLiftMotor = motor(PORT6, GREEN, true);
 motor PincherMotor = motor(PORT13, GREEN, false);
+pneumatics Pincher = pneumatics(Brain.ThreeWirePort.E);
 
 pot armPot = pot(Brain.ThreeWirePort.D);
 //bumper clawBumper = bumper();
