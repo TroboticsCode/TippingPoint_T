@@ -10,14 +10,15 @@ brain  Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor LifterMotorL = motor(PORT4, GREEN, false);
-motor LifterMotorR = motor(PORT2, GREEN, true);
+motor LifterMotorL = motor(PORT2, GREEN, false);
+motor LifterMotorR = motor(PORT4, GREEN, true);
 motor ForkLiftMotor = motor(PORT6, GREEN, true);
 motor PincherMotor = motor(PORT13, GREEN, false);
 pneumatics Pincher = pneumatics(Brain.ThreeWirePort.E);
 
 pot armPot = pot(Brain.ThreeWirePort.D);
-//bumper clawBumper = bumper();
+pot forkLiftPot = pot(Brain.ThreeWirePort.A);
+bumper clawBumper = bumper(Brain.ThreeWirePort.B);
 
 
 // VEXcode generated functions

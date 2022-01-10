@@ -46,7 +46,7 @@ void userDrive(void);
 
   #define FrontLeftPort     PORT8
   #define FrontRightPort    PORT9
-  #define BackLeftPort      PORT3
+  #define BackLeftPort      PORT5
   #define BackRightPort     PORT1
 
 #elif defined(CHASSIS_2_MOTOR_INLINE)
