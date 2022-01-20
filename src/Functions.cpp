@@ -38,3 +38,25 @@ void pClaw(bool open)
 {
   Pincher.set(open);
 }
+
+void moveArm(int32_t target)
+{
+  pidStruct_t armPID;
+  pidInit(&armPID, 0.0125, 0.000000001, 0, 10, 20);
+  float arm_Power = 0;
+  uint32_t timeOut = 100000;
+  uint64_t startTime = Brain.timer(timeUnits::msec);
+
+  do
+  {
+    printPIDValues(&armPID);
+    arm_Power = pidCalculate(&armPID, target, armPot.value(range10bit));
+
+    LifterMotorR.spin(forward, 12 * arm_Power, voltageUnits::volt);
+    LifterMotorL.spin(forward, 12 * arm_Power, voltageUnits::volt);
+
+  }while((fabs(armPID.avgError) > 0.03) && (Brain.timer(timeUnits::msec) - startTime < timeOut));
+  
+  LifterMotorL.setBrake(hold);
+  LifterMotorR.setBrake(hold);
+}

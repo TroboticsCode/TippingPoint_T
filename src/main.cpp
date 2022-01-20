@@ -100,6 +100,11 @@ void usercontrol(void) {
     // DriveFunctionsConfig.h properly
     userDrive();
 
+    if(Controller1.ButtonUp.pressing())
+    {
+      moveArm(540); //just for testing
+    }
+
     //claw piston
     if (Controller1.ButtonL2.pressing()) 
     {
@@ -112,7 +117,7 @@ void usercontrol(void) {
 
     //forklift potentiometer 
     //fork up
-    if (Controller1.ButtonX.pressing() && forkLiftPot.value(range10bit) > 403)
+    if (Controller1.ButtonX.pressing() && forkLiftPot.value(range10bit) > 410)
     {
       ForkLiftMotor.spin(reverse);
     } 

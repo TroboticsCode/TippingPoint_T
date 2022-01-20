@@ -27,15 +27,18 @@ void Auton1()
   wait(1, seconds);
   moveRotate(-51, 25, 3000); // rotates towards another goal
   wait(1, seconds);
-  moveLinear(43, 45, 3000); // moves towards the goal ...
+  moveLinear(45, 45, 3000); // moves towards the goal ...
   wait(0, seconds);
-  //claw(); // for some reason should grab a goal
+  pClaw(true); // for some reason should grab a goal
+  wait(0, seconds);
   moveLinear(-78, 60, 3000); // moves the grabbed goal away to score more points probably
 
 }
 
 void Auton2()
 {
-
+  moveLinear(3, 100, 3000);
+  //pClaw(true);
+  //wait(1, seconds);
+  //pClaw(false);
 }
-
