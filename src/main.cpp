@@ -53,12 +53,16 @@ void autonomous(void) {
   case NONE:
     break;
 
-  case AutonR:
+  case Auton_Skills:
     Auton1();
     break;
 
-  case AutonB:
+  case Auton_Right:
     Auton2();
+    break;
+
+  case Auton_Left:
+    Auton3();
     break;
 
   // Default = NO autonomous
@@ -83,7 +87,7 @@ void usercontrol(void) {
   // remove existing demo code and replace with you own! Then remove this
   // comment
   while (1) {
-    Controller1.ButtonY.pressed(autonomous);
+    //Controller1.ButtonY.pressed(autonomous);
 
     // leave the drive code here, it should work if you set up
     // DriveFunctionsConfig.h properly

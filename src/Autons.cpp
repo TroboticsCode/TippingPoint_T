@@ -6,7 +6,7 @@
 
 //Put your auton routines in here
 
-void Auton1()
+void Auton1() //skills
 {
  // setRotGains(0, 0, 0, 20, 10); //update PID gains to tune robot
 //  setLinGains(0, 0, 0, 20, 10);
@@ -34,8 +34,19 @@ void Auton1()
 
 }
 
-void Auton2()
+void Auton2() //right
 {
-
+  moveLinear(12, 20, 3000);
+  moveStop(hold);
+  wait(1, seconds);
+  pClaw(true);
+  wait(1, seconds);
+  moveLinear(-12, 20, 3000);
+  moveStop(hold);
 }
 
+void Auton3() //
+{
+  moveLinear(3, 50, 1000);
+  moveStop(hold);
+}

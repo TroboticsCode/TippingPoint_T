@@ -18,7 +18,7 @@ using namespace vex;
 //function declarations
 void moveLinear(float distance, int velocity, uint32_t timeOut);
 void moveRotate(int16_t degrees, int velocity, uint32_t timeOut);
-void moveStop(void);
+void moveStop(brakeType brake_type);
 void userDrive(void);
 
 //this is where all the config variables for a robot are located. Change them to match your robot

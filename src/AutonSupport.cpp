@@ -30,20 +30,27 @@ void cycle_autons(void)
 {
     if (state == 0)
     {
-        state = AutonR;
-        strcpy(state_name, "Auton_1");
+        state = Auton_Skills;
+        strcpy(state_name, "Skills");
     }
-    else if (state == AutonR)
+    else if (state == Auton_Skills)
     {
-         state =   AutonB;
-         strcpy(state_name, "Auton_2");
+         state =   Auton_Right;
+         strcpy(state_name, "Right");
     }
     
-    else if (state == AutonB)
+    else if (state == Auton_Right)
+    {
+        state = Auton_Left;
+        strcpy(state_name, "Left");
+    }
+
+    else if (state == Auton_Left)
     {
         state = NONE;
         strcpy(state_name, "NONE");
     }
+
     Paint_Screen();
 }
 

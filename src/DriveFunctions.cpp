@@ -29,8 +29,8 @@ using namespace vex;
 void userDrive(void)
 {
 #ifdef ARCADE_CONTROL
-  int32_t horizontalAxis = Controller1.HORIZONTALAXIS.value()/2;
-  int32_t verticalAxis = Controller1.VERTICALAXIS.value()/2;
+  int32_t horizontalAxis = Controller1.HORIZONTALAXIS.value();
+  int32_t verticalAxis = Controller1.VERTICALAXIS.value();
   
   #ifdef CHASSIS_2_MOTOR_INLINE
     DriveRight.setBrake(brakeType::coast);

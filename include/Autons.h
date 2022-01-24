@@ -8,9 +8,10 @@
 //add defines here as more auton routines are created
 //number them sequentially and match them to the cases names
 //in autonomous() in main.cpp
-#define NONE 0
-#define AutonR 1
-#define AutonB 2
+#define NONE         0
+#define Auton_Skills 1
+#define Auton_Right  2
+#define Auton_Left   3
 
 extern int state;
 
@@ -21,5 +22,6 @@ void Paint_Screen(void);
 //list the names of your autonomous programs here
 void Auton1(void);
 void Auton2(void);
+void Auton3(void);
 
 #endif
