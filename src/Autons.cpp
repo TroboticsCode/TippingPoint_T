@@ -40,7 +40,12 @@ void Auton2() //right
   moveStop(hold);
   wait(1, seconds);
   pClaw(true);
+  moveRotate(-35, 90, 3000);
+  wait(0.5, seconds);
+  moveLinear(-12, 90, 3000);
   wait(1, seconds);
+  moveRotate(35, 90, 3000);
+  wait(0.5, seconds);
   moveLinear(-12, 20, 3000);
   moveStop(hold);
 }
