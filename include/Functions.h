@@ -15,4 +15,6 @@ void testPID(void);
 void arm(int angle);
 void claw(bool open);
 void pClaw(bool open);
+void moveArm(int32_t target);
+
 #endif

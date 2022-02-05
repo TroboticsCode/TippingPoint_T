@@ -15,7 +15,8 @@ extern motor PincherMotor;
 extern pneumatics Pincher;
 
 extern pot armPot;
-//extern bumper clawBumper;
+extern pot forkLiftPot;
+extern bumper clawBumper;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Text.
