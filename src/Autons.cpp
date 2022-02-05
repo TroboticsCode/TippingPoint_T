@@ -52,6 +52,6 @@ void Auton2() //right
 
 void Auton3() //
 {
-  moveLinear(3, 50, 1000);
-  moveStop(hold);
+
 }
+

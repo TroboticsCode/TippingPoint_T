@@ -106,7 +106,7 @@ void usercontrol(void) {
 
     if(Controller1.ButtonUp.pressing())
     {
-      moveArm(540); //just for testing
+      //moveArm(540); //just for testing
     }
 
     //claw piston
