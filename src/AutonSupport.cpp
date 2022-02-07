@@ -42,7 +42,7 @@ void cycle_autons(void)
     else if (state == Auton_Right)
     {
         state = Auton_Left;
-        strcpy(state_name, "Left");
+        strcpy(state_name, "Skills Advanced Blue");
     }
 
     else if (state == Auton_Left)

@@ -2,7 +2,7 @@
 #include "vex.h"
 vex::vision::signature BLUESIG = vex::vision::signature (1, -1949, -1337, -1643, 4481, 6111, 5296, 2.5, 0);
 vex::vision::signature REDSIG = vex::vision::signature (2, 6677, 7211, 6944, -871, -591, -731, 2.5, 0);
-vex::vision::signature YELLOWSIG = vex::vision::signature (3, 1171, 1579, 1375, -2949, -2763, -2856, 5.2, 0);
+vex::vision::signature YELLOWSIG = vex::vision::signature (3, -291, 1693, 701, -3459, -2783, -3121, 1.3, 0);
 vex::vision::signature SIG_4 = vex::vision::signature (4, 0, 0, 0, 0, 0, 0, 2.5, 0);
 vex::vision::signature SIG_5 = vex::vision::signature (5, 0, 0, 0, 0, 0, 0, 2.5, 0);
 vex::vision::signature SIG_6 = vex::vision::signature (6, 0, 0, 0, 0, 0, 0, 2.5, 0);

@@ -54,17 +54,19 @@ void goalCenter(int color) {
 
     if (objectCenter < CENTER_X - 5) {
       Brain.Screen.print("turn right");
-      BackRight.spin(directionType::fwd, 10, velocityUnits::pct);
-      BackLeft.spin(directionType::rev, 10, velocityUnits::pct);
-      FrontRight.spin(directionType::fwd, 10, velocityUnits::pct);
-      FrontLeft.spin(directionType::rev, 10, velocityUnits::pct);
-    } else if (objectCenter > CENTER_X + 5) {
+      BackRight.spin(directionType::fwd, 15, velocityUnits::pct);
+      BackLeft.spin(directionType::rev, 15, velocityUnits::pct);
+      FrontRight.spin(directionType::fwd, 15, velocityUnits::pct);
+      FrontLeft.spin(directionType::rev, 15, velocityUnits::pct);
+    } 
+    else if (objectCenter > CENTER_X + 5) {
       Brain.Screen.print("turn left ");
-      BackRight.spin(directionType::rev, 10, velocityUnits::pct);
-      BackLeft.spin(directionType::fwd, 10, velocityUnits::pct);
-      FrontRight.spin(directionType::rev, 10, velocityUnits::pct);
-      FrontLeft.spin(directionType::fwd, 10, velocityUnits::pct);
-    } else {
+      BackRight.spin(directionType::rev, 15, velocityUnits::pct);
+      BackLeft.spin(directionType::fwd, 15, velocityUnits::pct);
+      FrontRight.spin(directionType::rev, 15, velocityUnits::pct);
+      FrontLeft.spin(directionType::fwd, 15, velocityUnits::pct);
+    } 
+    else {
       Brain.Screen.print("Dont move");
       BackRight.stop();
       BackLeft.stop();
