@@ -294,7 +294,7 @@ void moveRotate(int16_t degrees, int velocity, uint32_t timeOut)
     FrontLeft.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
     BackLeft.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
     FrontRight.rotateFor(-rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
-    BackRight.rotateFor(-rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);
+    BackRight.rotateFor(-rotations, rotationUnits::rev, velocity, velocityUnits::pct, true);
 
   #elif defined CHASSIS_2_MOTOR_INLINE
     DriveRight.rotateFor(rotations, rotationUnits::rev, velocity, velocityUnits::pct, false);

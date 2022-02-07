@@ -31,7 +31,7 @@ void cycle_autons(void)
     if (state == 0)
     {
         state = Auton_Skills;
-        strcpy(state_name, "Skills");
+        strcpy(state_name, "Skills BLUE!");
     }
     else if (state == Auton_Skills)
     {

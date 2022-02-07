@@ -5,8 +5,12 @@
 //as well as the API for the code.
 #include "vex.h"
 
-#define OPEN true
-#define CLOSE false
+#define OPEN false
+#define CLOSE true
+
+#define SIGRED     1
+#define SIGBLUE    2
+#define SIGYELLOW  3
 
 //enter the prototypes for other functions here
 //lift, claw, etc
@@ -16,5 +20,7 @@ void arm(int angle);
 void claw(bool open);
 void pClaw(bool open);
 void moveArm(int32_t target);
+void goalCenter(int color);
+void goalApproach(int color);
 
 #endif
