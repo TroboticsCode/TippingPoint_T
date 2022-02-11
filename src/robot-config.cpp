@@ -19,7 +19,7 @@ pneumatics Pincher = pneumatics(Brain.ThreeWirePort.E);
 pot armPot = pot(Brain.ThreeWirePort.D);
 pot forkLiftPot = pot(Brain.ThreeWirePort.A);
 bumper clawBumper = bumper(Brain.ThreeWirePort.B);
-
+gps GPS = gps(PORT15);
 
 // VEXcode generated functions
 

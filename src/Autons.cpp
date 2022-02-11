@@ -2,6 +2,7 @@
 #include "DriveFunctionsConfig.h"
 #include "Functions.h"
 #include "vex.h"
+#include "gps.h"
 
 // Put your auton routines in here
 
@@ -73,19 +74,25 @@ void Auton2() // right
   moveStop(hold);
 }
 
-void Auton3() //
+void Auton3() //programming skills
 {
   // start lift control task
-  vex::task t(pidArmTask); //this will run in the background to keep the arm in position
+  vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
   armAngleIndex = 0; //update index to move arm to new position
 
-  setRotGains(0, 0, 0, 20, 10); // update drive PID gains to tune robot
+  // update drive PID gains to tune robot
+  setRotGains(0, 0, 0, 20, 10); 
   setLinGains(0, 0, 0, 20, 10);
+
+  //wait for GPS to calibrate
+  GPS.calibrate();
+  while(GPS.isCalibrating());
+
+  movePoint(coordinates[yellowCenter][xCOR], coordinates[yellowCenter][yCOR]);
 
   // starting blue
   moveLinear(91, 50, 10000); // pushes goal one across the field
   moveStop(hold);
-  // wait(1, seconds);
 
   // first yellow
   moveRotate(-170, 50, 3000); // rotate towards the second goal (yellow)

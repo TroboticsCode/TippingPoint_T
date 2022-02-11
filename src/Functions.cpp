@@ -116,7 +116,7 @@ void goalApproach(int color) {
     driveR = defPower;
 
     // determine error from center
-    error = abs(CENTER_X - objectCenter);
+    error = fabs(CENTER_X - objectCenter);
     correction = error * gain;
 
     if (correction > defPower)
