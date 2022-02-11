@@ -2,9 +2,14 @@
 #include "DriveFunctionsConfig.h"
 #include "Vision.h"
 #include "vex.h"
+#include "PID.h"
 
 #define CENTER_X 316 / 2.0f
 #define CENTER_Y 212 / 2.0f
+
+uint16_t armAngles[] = {0, 200, 400, 800};
+uint8_t armAngleIndex = 0;
+pidStruct_t armPID;
 
 void testPID() {
   for (int i = 0; i < 8; i++) {
@@ -153,4 +158,14 @@ void goalApproach(int color) {
   FrontRight.stop(brakeType::brake);
   FrontLeft.stop(brakeType::brake);
   pClaw(CLOSE);
+}
+
+int pidArmTask()
+{
+  pidCalculate(&armPID, armAngles[armAngleIndex], armPot.value(range10bit));
+  LifterMotorL.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
+  LifterMotorR.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
+
+  //vex::task::sleep(armPID.minDt);
+  return 0;
 }

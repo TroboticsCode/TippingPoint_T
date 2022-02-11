@@ -38,10 +38,15 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-LifterMotorL.setVelocity(100, percent);
-LifterMotorR.setVelocity(100, percent);
-LifterMotorL.setPosition(0, degrees);
-LifterMotorR.setPosition(0, degrees);
+  LifterMotorL.setVelocity(100, percent);
+  LifterMotorR.setVelocity(100, percent);
+  LifterMotorL.setPosition(0, degrees);
+  LifterMotorR.setPosition(0, degrees);
+
+  //set armPID gains
+  armPID.kP = 1;
+  armPID.kI = 0.00001;
+  armPID.kD = 1;
 
   Controller1.ButtonR1.pressed(cycle_autons);
   Brain.Screen.pressed(cycle_autons);
@@ -91,63 +96,55 @@ void usercontrol(void) {
   LifterMotorR.setStopping(hold);
   PincherMotor.setStopping(hold);
   ForkLiftMotor.setStopping(hold);
-  
+
   LifterMotorL.setVelocity(100, percent);
   LifterMotorR.setVelocity(100, percent);
   PincherMotor.setVelocity(50, percent);
   ForkLiftMotor.setVelocity(100, percent);
 
   while (1) {
-    //Controller1.ButtonY.pressed(autonomous);
+    // Controller1.ButtonY.pressed(autonomous);
 
     // leave the drive code here, it should work if you set up
     // DriveFunctionsConfig.h properly
     userDrive();
 
-    if(Controller1.ButtonUp.pressing())
-    {
-      //moveArm(540); //just for testing
+    if (Controller1.ButtonUp.pressing()) {
+      // moveArm(540); //just for testing
     }
 
-    //claw piston
-    if (Controller1.ButtonL2.pressing()) 
-    {
+    // claw piston
+    if (Controller1.ButtonL2.pressing()) {
       pClaw(true);
-    } 
-    else if (Controller1.ButtonL1.pressing()) 
-    {
+    } else if (Controller1.ButtonL1.pressing()) {
       pClaw(false);
-    } 
+    }
 
-    //forklift potentiometer 
-    //fork up
-    if (Controller1.ButtonX.pressing() && forkLiftPot.value(range10bit) > 410)
-    {
+    // forklift potentiometer
+    // fork up
+    if (Controller1.ButtonX.pressing() && forkLiftPot.value(range10bit) > 410) {
       ForkLiftMotor.spin(reverse);
-    } 
-    //fork down
-    else if (Controller1.ButtonB.pressing() && forkLiftPot.value(range10bit) < 750) 
-    {
+    }
+    // fork down
+    else if (Controller1.ButtonB.pressing() &&
+             forkLiftPot.value(range10bit) < 750) {
       ForkLiftMotor.spin(forward);
-    } 
-    else 
-    {
+    } else {
       ForkLiftMotor.stop();
     }
 
-    //lift control
-    if (Controller1.ButtonR2.pressing() && armPot.value(range10bit) > 404) //down
+    // lift control
+    if (Controller1.ButtonR2.pressing() &&
+        armPot.value(range10bit) > 404) // down
     {
       LifterMotorL.spin(reverse);
       LifterMotorR.spin(reverse);
-    } 
-    else if (Controller1.ButtonR1.pressing() && armPot.value(range10bit) < 790) //up
+    } else if (Controller1.ButtonR1.pressing() &&
+               armPot.value(range10bit) < 790) // up
     {
       LifterMotorL.spin(forward);
       LifterMotorR.spin(forward);
-    } 
-    else 
-    {
+    } else {
       LifterMotorL.stop();
       LifterMotorR.stop();
     }
@@ -156,7 +153,7 @@ void usercontrol(void) {
     Brain.Screen.setCursor(1, 1);
     Brain.Screen.print("Fork Lift Pot Value: ");
     Brain.Screen.print(forkLiftPot.value(range10bit));
-    Brain.Screen.setCursor(2,1);
+    Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("armPot: ");
     Brain.Screen.print(armPot.value(range10bit));
     wait(20, msec); // Sleep the task for a short amount of time to

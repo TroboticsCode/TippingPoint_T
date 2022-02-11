@@ -116,8 +116,8 @@ void userDrive(void);
 //#define GEAR_SET    BLUE
 #define GEAR_SET    GREEN
 
-//#define PID
-//#define GYRO
+#define PID
+#define GYRO
 
 #ifdef PID
   void setLinGains(double kP, double kI, double kD, double slewRate, int minDT);
