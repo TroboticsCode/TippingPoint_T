@@ -54,7 +54,7 @@ void Auton1() // skills
   // moveLinear(-78, 60, 3000); // moves the grabbed goal away to score more
   // points probably
   moveRotate(-50, 50, 3000);
-  goalApproach(SIGBLUE);
+  goalApproach(SIGBLUE, 50);
   moveLinear(-190, 100, 4000);
 }
 
@@ -77,19 +77,20 @@ void Auton2() // right
 void Auton3() //programming skills
 {
   // start lift control task
-  vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
-  armAngleIndex = 0; //update index to move arm to new position
+  //vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
+  //armAngleIndex = 0; //update index to move arm to new position
 
   // update drive PID gains to tune robot
-  setRotGains(0, 0, 0, 20, 10); 
-  setLinGains(0, 0, 0, 20, 10);
+  setLinGains(65, 0.0000000000001, 35, 15, 10); //done
+  setRotGains(0.03, 0.00000000000000001, 0.002, 15, 10);
 
   //wait for GPS to calibrate
   GPS.calibrate();
   while(GPS.isCalibrating());
 
-  movePoint(coordinates[yellowCenter][xCOR], coordinates[yellowCenter][yCOR]);
-
+  //movePoint(coordinates[yellowCenter][xCOR], coordinates[yellowCenter][yCOR]);
+  movePoint(24, 24);
+/*
   // starting blue
   moveLinear(91, 50, 10000); // pushes goal one across the field
   moveStop(hold);
@@ -131,6 +132,6 @@ void Auton3() //programming skills
   // moveLinear(43, 45, 3000); // moves towards the goal ...
   // wait(0, seconds);
 
-  goalApproach(SIGBLUE);
-  moveLinear(-190, 100, 4000);
+  goalApproach(SIGBLUE, 50);
+  moveLinear(-190, 100, 4000);*/
 }

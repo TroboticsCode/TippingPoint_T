@@ -134,6 +134,8 @@ void moveLinear(float distance, int velocity, uint32_t timeOut)
       rightRevAvg = (BackRight.rotation(rev) + FrontRight.rotation(rev)) / 2.0;
 
       DriveR_Power = (velocity/100.0f) * (pidCalculate(&driveR_PID, rotations, rightRevAvg) / 100.0);
+      if(DriveR_Power > 0.5) //apply correction to straighten robot
+        DriveR_Power += 3;
       DriveL_Power = (velocity/100.0f) * (pidCalculate(&driveL_PID, rotations, leftRevAvg) / 100.0);
 
       FrontRight.spin(forward, 12 * DriveR_Power, voltageUnits::volt);

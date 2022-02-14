@@ -18,9 +18,9 @@ int calculateHeading(int xDest, int yDest)
   int yCur = (int)GPS.yPosition(inches);
   int headingCur = (int)GPS.heading(degrees);
 
-  int headingDest = atan2((yCur-yDest), (xCur-xDest));
+  int headingDest = atan2((xCur-xDest), (yCur-yDest));
 
-  int rotDeg = 180 - headingCur - headingDest;
+  int rotDeg = headingCur - headingDest;
 
   return rotDeg;
 }

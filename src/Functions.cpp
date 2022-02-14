@@ -1,8 +1,9 @@
 #include "functions.h"
 #include "DriveFunctionsConfig.h"
+#include "PID.h"
 #include "Vision.h"
 #include "vex.h"
-#include "PID.h"
+
 
 #define CENTER_X 316 / 2.0f
 #define CENTER_Y 212 / 2.0f
@@ -12,9 +13,14 @@ uint8_t armAngleIndex = 0;
 pidStruct_t armPID;
 
 void testPID() {
-  for (int i = 0; i < 8; i++) {
-    moveLinear(12, 100, 10000);
-    moveRotate(-90, 90, 10000);
+  setLinGains(65, 0.0000000000001, 35, 15, 10); //done
+  setRotGains(0.03, 0.00000000000000001, 0.002, 15, 10);
+  for (int i = 0; i < 1; i++) {
+    //moveLinear(36, 100, 10000);
+    moveRotate(90, 100, 100000);
+    moveStop(brake);
+    wait(5, sec);
+    //moveRotate(-90, 90, 10000);
   }
   // moveStop();
   wait(20, msec); // Sleep the task for a short amount of time t
@@ -63,15 +69,13 @@ void goalCenter(int color) {
       BackLeft.spin(directionType::rev, 15, velocityUnits::pct);
       FrontRight.spin(directionType::fwd, 15, velocityUnits::pct);
       FrontLeft.spin(directionType::rev, 15, velocityUnits::pct);
-    } 
-    else if (objectCenter > CENTER_X + 5) {
+    } else if (objectCenter > CENTER_X + 5) {
       Brain.Screen.print("turn left ");
       BackRight.spin(directionType::rev, 15, velocityUnits::pct);
       BackLeft.spin(directionType::fwd, 15, velocityUnits::pct);
       FrontRight.spin(directionType::rev, 15, velocityUnits::pct);
       FrontLeft.spin(directionType::fwd, 15, velocityUnits::pct);
-    } 
-    else {
+    } else {
       Brain.Screen.print("Dont move");
       BackRight.stop();
       BackLeft.stop();
@@ -87,11 +91,11 @@ void goalCenter(int color) {
   FrontLeft.stop(brakeType::brake);
 }
 
-void goalApproach(int color) {
+void goalApproach(int color, uint8_t vel) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting goal approach routine");
 
-  const int defPower = 40;
+  const uint8_t defPower = vel;
 
   int driveL = defPower;
   int driveR = defPower;
@@ -132,7 +136,7 @@ void goalApproach(int color) {
         driveL = defPower;
         driveR = defPower;
       }
-    } else { //no object found, go straight
+    } else { // no object found, go straight
       driveL = defPower;
       driveR = defPower;
     }
@@ -160,12 +164,13 @@ void goalApproach(int color) {
   pClaw(CLOSE);
 }
 
-int pidArmTask()
-{
-  pidCalculate(&armPID, armAngles[armAngleIndex], armPot.value(range10bit));
-  LifterMotorL.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
-  LifterMotorR.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
+int pidArmTask() {
+  while (1) {
+    pidCalculate(&armPID, armAngles[armAngleIndex], armPot.value(range10bit));
+    LifterMotorL.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
+    LifterMotorR.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
 
-  //vex::task::sleep(armPID.minDt);
-  return 0;
+    // vex::task::sleep(armPID.minDt);
+    return 0;
+  }
 }

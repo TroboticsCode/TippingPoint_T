@@ -59,7 +59,8 @@ void autonomous(void) {
     break;
 
   case Auton_Skills:
-    Auton1();
+    //Auton1();
+    testPID();
     break;
 
   case Auton_Right:
@@ -156,6 +157,19 @@ void usercontrol(void) {
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("armPot: ");
     Brain.Screen.print(armPot.value(range10bit));
+
+    if(GPS.installed())
+    {
+      Brain.Screen.setCursor(4, 1);
+      Brain.Screen.print("GPS Data:\n");
+      Brain.Screen.newLine();
+      Brain.Screen.print("X: %f\n", GPS.xPosition(inches));
+      Brain.Screen.newLine();
+      Brain.Screen.print("Y: %f\n", GPS.yPosition(inches));
+      Brain.Screen.newLine();
+      Brain.Screen.print("Heading: %f deg\n", GPS.heading(deg));
+    }
+
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
