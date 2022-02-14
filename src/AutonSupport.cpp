@@ -44,12 +44,13 @@ void cycle_autons(void)
         state = Auton_Left;
         strcpy(state_name, "Skills Advanced Blue");
     }
-
     else if (state == Auton_Left)
     {
         state = NONE;
         strcpy(state_name, "NONE");
     }
+
+    
 
     Paint_Screen();
 }

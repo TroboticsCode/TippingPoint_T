@@ -82,11 +82,11 @@ void goalCenter(int color) {
   FrontLeft.stop(brakeType::brake);
 }
 
-void goalApproach(int color) {
+void goalApproach(int color, uint8_t vel) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting goal approach routine");
 
-  const int defPower = 40;
+  const int defPower = vel;
 
   int driveL = defPower;
   int driveR = defPower;
