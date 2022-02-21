@@ -8,7 +8,7 @@
 #define CENTER_X 316 / 2.0f
 #define CENTER_Y 212 / 2.0f
 
-uint16_t armAngles[] = {0, 200, 400, 800};
+uint16_t armAngles[] = {492, 670, 800};
 uint8_t armAngleIndex = 0;
 pidStruct_t armPID;
 
@@ -170,7 +170,15 @@ int pidArmTask() {
     LifterMotorL.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
     LifterMotorR.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
 
-    // vex::task::sleep(armPID.minDt);
-    return 0;
+    //printPIDValues(&armPID);
+
+    Brain.Screen.setCursor(8, 1);
+    Brain.Screen.print("arm function ran ");
+
+    vex::task::sleep(armPID.minDt);
+
   }
+      
+  return 0;
+
 }

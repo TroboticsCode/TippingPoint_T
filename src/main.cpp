@@ -43,11 +43,6 @@ void pre_auton(void) {
   LifterMotorL.setPosition(0, degrees);
   LifterMotorR.setPosition(0, degrees);
 
-  //set armPID gains
-  armPID.kP = 1;
-  armPID.kI = 0.00001;
-  armPID.kD = 1;
-
   Controller1.ButtonR1.pressed(cycle_autons);
   Brain.Screen.pressed(cycle_autons);
   return;
@@ -103,6 +98,15 @@ void usercontrol(void) {
   PincherMotor.setVelocity(50, percent);
   ForkLiftMotor.setVelocity(100, percent);
 
+  pidInit(&armPID, 1.75, 0.00000000001, 0.2, 10, 10);
+
+  // start lift control task
+  vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
+  armAngleIndex = 0; //update index to move arm to new position
+
+
+  bool oneShot = false;
+
   while (1) {
     // Controller1.ButtonY.pressed(autonomous);
 
@@ -135,7 +139,7 @@ void usercontrol(void) {
     }
 
     // lift control
-    if (Controller1.ButtonR2.pressing() &&
+    /*if (Controller1.ButtonR2.pressing() &&
         armPot.value(range10bit) > 404) // down
     {
       LifterMotorL.spin(reverse);
@@ -148,6 +152,29 @@ void usercontrol(void) {
     } else {
       LifterMotorL.stop();
       LifterMotorR.stop();
+    }*/
+
+    //arm tuning
+    if(Controller1.ButtonUp.pressing() && !oneShot)
+    {
+      if(armAngleIndex < 2)
+        armAngleIndex++;
+
+      oneShot = true;
+      wait(100, msec);
+    }
+    else if(Controller1.ButtonDown.pressing() && !oneShot)
+    {
+      if(armAngleIndex > 0)
+        armAngleIndex--;
+
+      oneShot = true;
+      wait(100, msec);
+
+    }
+    else
+    {
+      oneShot = false;
     }
 
     Brain.Screen.clearScreen();
@@ -157,10 +184,14 @@ void usercontrol(void) {
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("armPot: ");
     Brain.Screen.print(armPot.value(range10bit));
+    Brain.Screen.newLine();
+
+    Brain.Screen.print("armAngleIndex: %d", armAngleIndex);
 
     if(GPS.installed())
     {
-      Brain.Screen.setCursor(4, 1);
+      Brain.Screen.newLine();
+      Brain.Screen.newLine();
       Brain.Screen.print("GPS Data:\n");
       Brain.Screen.newLine();
       Brain.Screen.print("X: %f\n", GPS.xPosition(inches));

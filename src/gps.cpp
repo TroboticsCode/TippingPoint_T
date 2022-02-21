@@ -22,6 +22,14 @@ int calculateHeading(int xDest, int yDest)
 
   int rotDeg = headingCur - headingDest;
 
+  Brain.Screen.clearScreen();
+  Brain.Screen.setCursor(1, 1);
+  Brain.Screen.print("Current Heading: %d", headingCur);
+  Brain.Screen.newLine();
+  Brain.Screen.print("New Heading: %d", headingDest);
+  Brain.Screen.newLine();
+  Brain.Screen.print("Rot Deg: %d", rotDeg);
+
   return rotDeg;
 }
 

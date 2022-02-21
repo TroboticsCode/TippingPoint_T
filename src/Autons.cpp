@@ -76,9 +76,12 @@ void Auton2() // right
 
 void Auton3() //programming skills
 {
+  //set armPID gains
+  pidInit(&armPID, 1.75, 0.00000000001, 0.2, 10, 10);
+
   // start lift control task
-  //vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
-  //armAngleIndex = 0; //update index to move arm to new position
+  vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
+  armAngleIndex = 0; //update index to move arm to new position
 
   // update drive PID gains to tune robot
   setLinGains(65, 0.0000000000001, 35, 15, 10); //done
