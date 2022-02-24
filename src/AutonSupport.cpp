@@ -47,6 +47,12 @@ void cycle_autons(void)
 
     else if (state == Auton_Left)
     {
+        state = Auton_Forward;
+        strcpy(state_name, "Forward");
+    }
+
+    else if (state == Auton_Forward) 
+    {
         state = NONE;
         strcpy(state_name, "NONE");
     }

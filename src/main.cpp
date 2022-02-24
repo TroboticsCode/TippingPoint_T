@@ -66,6 +66,10 @@ void autonomous(void) {
     Auton3();
     break;
 
+  case Auton_Forward:
+    Auton4();
+    break;
+
   // Default = NO autonomous
   default:
     break;

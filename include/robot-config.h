@@ -19,6 +19,7 @@ extern pot forkLiftPot;
 extern bumper clawBumper;
 extern gps GPS;
 
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Text.
  * 
