@@ -54,8 +54,8 @@ void autonomous(void) {
     break;
 
   case Auton_Skills:
-    //Auton1();
-    testPID();
+    Auton1();
+    //testPID();
     break;
 
   case Auton_Right:
@@ -105,7 +105,7 @@ void usercontrol(void) {
   pidInit(&armPID, 1.75, 0.00000000001, 0.2, 10, 10);
 
   // start lift control task
-  vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
+  //vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
   armAngleIndex = 0; //update index to move arm to new position
 
 
@@ -143,22 +143,23 @@ void usercontrol(void) {
     }
 
     // lift control
-    /*if (Controller1.ButtonR2.pressing() &&
-        armPot.value(range10bit) > 404) // down
+    if (Controller1.ButtonR2.pressing() &&
+      armPot.value(range10bit) > 404) // down
     {
       LifterMotorL.spin(reverse);
       LifterMotorR.spin(reverse);
     } else if (Controller1.ButtonR1.pressing() &&
-               armPot.value(range10bit) < 790) // up
+      armPot.value(range10bit) < 790) // up
     {
       LifterMotorL.spin(forward);
       LifterMotorR.spin(forward);
     } else {
       LifterMotorL.stop();
       LifterMotorR.stop();
-    }*/
+    }
 
     //arm tuning
+    /*
     if(Controller1.ButtonUp.pressing() && !oneShot)
     {
       if(armAngleIndex < 2)
@@ -180,7 +181,7 @@ void usercontrol(void) {
     {
       oneShot = false;
     }
-
+    */
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1, 1);
     Brain.Screen.print("Fork Lift Pot Value: ");

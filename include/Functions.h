@@ -26,7 +26,7 @@ void claw(bool open);
 void pClaw(bool open);
 void moveArm(int32_t target);
 void goalCenter(int color);
-void goalApproach(int color, uint8_t vel);
+void goalApproach(int color, uint8_t vel, uint64_t timeOut);
 int pidArmTask(void);
 
 #endif

@@ -4,7 +4,6 @@
 #include "Vision.h"
 #include "vex.h"
 
-
 #define CENTER_X 316 / 2.0f
 #define CENTER_Y 212 / 2.0f
 
@@ -13,14 +12,14 @@ uint8_t armAngleIndex = 0;
 pidStruct_t armPID;
 
 void testPID() {
-  setLinGains(65, 0.0000000000001, 35, 15, 10); //done
+  setLinGains(65, 0.0000000000001, 35, 15, 10); // done
   setRotGains(0.03, 0.00000000000000001, 0.002, 15, 10);
   for (int i = 0; i < 1; i++) {
-    //moveLinear(36, 100, 10000);
+    // moveLinear(36, 100, 10000);
     moveRotate(90, 100, 100000);
     moveStop(brake);
     wait(5, sec);
-    //moveRotate(-90, 90, 10000);
+    // moveRotate(-90, 90, 10000);
   }
   // moveStop();
   wait(20, msec); // Sleep the task for a short amount of time t
@@ -40,6 +39,9 @@ void pClaw(bool open) { Pincher.set(open); }
 void goalCenter(int color) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting ball center routine");
+  Brain.Screen.setCursor(6, 1);
+  Brain.Screen.clearLine();
+  Brain.Screen.print("Cam status: %d", Vision.installed());
 
   if (color == SIGRED)
     Vision.takeSnapshot(REDSIG);
@@ -50,7 +52,7 @@ void goalCenter(int color) {
 
   int objectCenter = Vision.largestObject.centerX;
 
-  while ((objectCenter > CENTER_X + 10) || (objectCenter < CENTER_X - 10)) {
+  while ((objectCenter > CENTER_X + 5) || (objectCenter < CENTER_X - 5)) {
     if (color == SIGRED)
       Vision.takeSnapshot(REDSIG);
     else if (color == SIGBLUE)
@@ -63,24 +65,30 @@ void goalCenter(int color) {
     Brain.Screen.clearLine();
     Brain.Screen.print(objectCenter);
 
-    if (objectCenter < CENTER_X - 5) {
-      Brain.Screen.print("turn right");
-      BackRight.spin(directionType::fwd, 15, velocityUnits::pct);
-      BackLeft.spin(directionType::rev, 15, velocityUnits::pct);
-      FrontRight.spin(directionType::fwd, 15, velocityUnits::pct);
-      FrontLeft.spin(directionType::rev, 15, velocityUnits::pct);
-    } else if (objectCenter > CENTER_X + 5) {
-      Brain.Screen.print("turn left ");
-      BackRight.spin(directionType::rev, 15, velocityUnits::pct);
-      BackLeft.spin(directionType::fwd, 15, velocityUnits::pct);
-      FrontRight.spin(directionType::rev, 15, velocityUnits::pct);
-      FrontLeft.spin(directionType::fwd, 15, velocityUnits::pct);
+    if (Vision.objectCount > 0) {
+      if (objectCenter < CENTER_X - 10) {
+        Brain.Screen.print("turn right");
+        BackRight.spin(directionType::fwd, 15, velocityUnits::pct);
+        BackLeft.spin(directionType::rev, 15, velocityUnits::pct);
+        FrontRight.spin(directionType::fwd, 15, velocityUnits::pct);
+        FrontLeft.spin(directionType::rev, 15, velocityUnits::pct);
+      } else if (objectCenter > CENTER_X + 10) {
+        Brain.Screen.print("turn left ");
+        BackRight.spin(directionType::rev, 15, velocityUnits::pct);
+        BackLeft.spin(directionType::fwd, 15, velocityUnits::pct);
+        FrontRight.spin(directionType::rev, 15, velocityUnits::pct);
+        FrontLeft.spin(directionType::fwd, 15, velocityUnits::pct);
+      } else {
+        Brain.Screen.print("Dont move");
+        BackRight.stop();
+        BackLeft.stop();
+        FrontRight.stop();
+        FrontLeft.stop();
+      }
     } else {
-      Brain.Screen.print("Dont move");
-      BackRight.stop();
-      BackLeft.stop();
-      FrontRight.stop();
-      FrontLeft.stop();
+      moveStop(brake);
+      Brain.Screen.clearLine();
+      Brain.Screen.print("No object detected");
     }
   }
   Brain.Screen.newLine();
@@ -91,9 +99,14 @@ void goalCenter(int color) {
   FrontLeft.stop(brakeType::brake);
 }
 
-void goalApproach(int color, uint8_t vel) {
+void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting goal approach routine");
+
+  BackRight.resetPosition();
+  BackLeft.resetPosition();
+  FrontRight.resetPosition();
+  FrontLeft.resetPosition();
 
   const uint8_t defPower = vel;
 
@@ -105,7 +118,10 @@ void goalApproach(int color, uint8_t vel) {
   float gain = 0.25;
   int correction = 0;
 
-  while (!clawBumper.pressing()) {
+  uint64_t startTime = Brain.timer(timeUnits::msec);
+
+  while (!clawBumper.pressing() &&
+         (Brain.timer(timeUnits::msec) - startTime < timeOut)) {
     if (color == SIGRED)
       Vision.takeSnapshot(REDSIG);
     else if (color == SIGBLUE)
@@ -170,15 +186,13 @@ int pidArmTask() {
     LifterMotorL.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
     LifterMotorR.spin(forward, 0.12f * armPID.output, voltageUnits::volt);
 
-    //printPIDValues(&armPID);
+    // printPIDValues(&armPID);
 
     Brain.Screen.setCursor(8, 1);
     Brain.Screen.print("arm function ran ");
 
     vex::task::sleep(armPID.minDt);
-
   }
-      
-  return 0;
 
+  return 0;
 }
