@@ -60,7 +60,10 @@ void Auton1() // skills
   // points probably
   moveRotate(-50, 100, 3000);
   //goalApproach(SIGBLUE, 50, 6000);
-  goalCenter(SIGBLUE);
+  for(int i = 0; i < 5; i++)
+  {
+    goalCenter(SIGBLUE);
+  }
   moveLinear(72, 100, 4000);
   moveLinear(-190, 100, 4000);
 }
