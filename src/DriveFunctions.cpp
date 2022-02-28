@@ -13,6 +13,9 @@ using namespace vex;
   motor FrontRight = motor(FrontRightPort, GEAR_SET, false);
   motor BackRight = motor(BackRightPort, GEAR_SET, false);
 
+  motor MidLeft = motor(MidLeftPort, GEAR_SET, false);
+  motor MidRight = motor(MidRightPort, GEAR_SET, true);
+
 #elif defined(CHASSIS_2_MOTOR_INLINE)
   motor DriveLeft = motor(DriveLeftPort, GEAR_SET, false);
   motor DriveRight = motor(DriveRightPort, GEAR_SET, true);
@@ -45,10 +48,17 @@ void userDrive(void)
     BackLeft.setBrake(brakeType::coast);
     FrontLeft.setBrake(brakeType::coast);
 
+    MidLeft.setBrake(brakeType::coast);
+    MidRight.setBrake(brakeType::coast);
+
     BackRight.spin(directionType::fwd, (verticalAxis - (horizontalAxis)), velocityUnits::pct);
     BackLeft.spin(directionType::fwd, (verticalAxis + (horizontalAxis)), velocityUnits::pct);
     FrontRight.spin(directionType::fwd, (verticalAxis - (horizontalAxis)), velocityUnits::pct);
     FrontLeft.spin(directionType::fwd, (verticalAxis + (horizontalAxis)), velocityUnits::pct);
+    
+    MidLeft.spin(directionType::fwd, (verticalAxis + (horizontalAxis)), velocityUnits::pct);
+    MidRight.spin(directionType::fwd, (verticalAxis - (horizontalAxis)), velocityUnits::pct);
+
   #endif
 
 #elif defined TANK_CONTROL

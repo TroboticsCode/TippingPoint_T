@@ -44,6 +44,12 @@ void userDrive(void);
   extern motor BackLeft;
   extern motor BackRight;
 
+  extern motor MidLeft;
+  extern motor MidRight;
+
+  #define MidLeftPort     PORT18
+  #define MidRightPort    PORT19
+
   #define FrontLeftPort     PORT8
   #define FrontRightPort    PORT9
   #define BackLeftPort      PORT5
