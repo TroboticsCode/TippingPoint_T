@@ -118,10 +118,6 @@ void usercontrol(void) {
     // DriveFunctionsConfig.h properly
     userDrive();
 
-    if (Controller1.ButtonUp.pressing()) {
-      // moveArm(540); //just for testing
-    }
-
     // claw piston
     if (Controller1.ButtonL2.pressing()) {
       pClaw(true);
