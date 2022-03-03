@@ -18,6 +18,7 @@ extern pot armPot;
 extern pot forkLiftPot;
 extern bumper clawBumper;
 extern gps GPS;
+extern pneumatics clampBack;
 
 
 /**

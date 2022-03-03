@@ -36,6 +36,8 @@ void arm(int angle) {
 
 void pClaw(bool open) { Pincher.set(open); }
 
+void pClampBack(bool open) { clampBack.set(open); }
+
 void goalCenter(int color) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting ball center routine");

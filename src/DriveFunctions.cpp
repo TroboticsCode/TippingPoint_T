@@ -119,6 +119,9 @@ void moveLinear(float distance, int velocity, uint32_t timeOut)
     BackLeft.resetRotation();
     BackRight.resetRotation();
 
+    MidLeft.resetRotation();
+    MidRight.resetRotation();
+
     double leftRevAvg  = 0;
     double rightRevAvg = 0;
 
@@ -152,6 +155,9 @@ void moveLinear(float distance, int velocity, uint32_t timeOut)
       FrontLeft.spin(forward, 12 * DriveL_Power, voltageUnits::volt);
       BackLeft.spin(forward, 12 * DriveL_Power, voltageUnits::volt);
       BackRight.spin(forward, 12 * DriveR_Power, voltageUnits::volt);
+
+      MidLeft.spin(forward, 12 * DriveL_Power, voltageUnits::volt);
+      MidRight.spin(forward, 12 * DriveR_Power, voltageUnits::volt);
     #endif
     
   }while((fabs(driveR_PID.avgError) > 0.03 || fabs(driveL_PID.avgError) > 0.03) && (Brain.timer(timeUnits::msec) - startTime < timeOut));
@@ -177,6 +183,9 @@ void moveStop(brakeType brake_type)
   BackLeft.stop(brake_type);
   FrontRight.stop(brake_type);
   BackRight.stop(brake_type);
+
+  MidLeft.stop(brake_type);
+  MidRight.stop(brake_type);
 
 #elif defined(CHASSIS_2_MOTOR_INLINE)
   DriveRight.stop(brake_type);
@@ -273,6 +282,8 @@ void moveRotate(int16_t degrees, int velocity, uint32_t timeOut)
       BackLeft.spin(forward, 12 * motorPower, voltageUnits::volt);
       BackRight.spin(reverse, 12 * motorPower, voltageUnits::volt);
 
+      MidLeft.spin(reverse, 12 * motorPower, voltageUnits::volt);
+      MidRight.spin(reverse, 12 * motorPower, voltageUnits::volt);
     #elif defined CHASSIS_2_MOTOR_INLINE
       DriveRight.spin(reverse, 12 * motorPower, voltageUnits::volt);
       DriveLeft.spin(forward, 12 * motorPower, voltageUnits::volt);

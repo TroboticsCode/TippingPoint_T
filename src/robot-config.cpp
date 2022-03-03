@@ -20,6 +20,7 @@ pot armPot = pot(Brain.ThreeWirePort.D);
 pot forkLiftPot = pot(Brain.ThreeWirePort.A);
 bumper clawBumper = bumper(Brain.ThreeWirePort.B);
 gps GPS = gps(PORT3);
+pneumatics clampBack = pneumatics(Brain.ThreeWirePort.F);
 
 
 // VEXcode generated functions

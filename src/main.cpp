@@ -131,15 +131,13 @@ void usercontrol(void) {
 
     // forklift potentiometer
     // fork up
-    if (Controller1.ButtonX.pressing() && forkLiftPot.value(range10bit) > 410) {
-      ForkLiftMotor.spin(reverse);
+    if (Controller1.ButtonX.pressing()) {
+      pClampBack(CLOSE);
     }
     // fork down
-    else if (Controller1.ButtonB.pressing() &&
-             forkLiftPot.value(range10bit) < 750) {
-      ForkLiftMotor.spin(forward);
-    } else {
-      ForkLiftMotor.stop();
+    else if (Controller1.ButtonB.pressing())
+    {
+      pClampBack(OPEN);
     }
 
     // lift control
