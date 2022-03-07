@@ -36,7 +36,7 @@ void arm(int angle) {
 
 void pClaw(bool open) { Pincher.set(open); }
 
-void pClampBack(bool open) { clampBack.set(open); }
+void pClampBack(bool open) { clampBack.set(!open); }
 
 void goalCenter(int color) {
   Brain.Screen.setCursor(1, 1);
@@ -122,7 +122,7 @@ void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
 
   uint64_t startTime = Brain.timer(timeUnits::msec);
 
-  while (!clawBumper.pressing() &&
+  while ((clawDistance.objectDistance(inches) > 0.75) &&
          (Brain.timer(timeUnits::msec) - startTime < timeOut)) {
     if (color == SIGRED)
       Vision.takeSnapshot(REDSIG);
@@ -165,10 +165,13 @@ void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
     Brain.Screen.print("Left Power %d", driveL);
     Brain.Screen.newLine();
     Brain.Screen.print("Right Power %d", driveR);
+
     BackRight.spin(directionType::fwd, driveR, velocityUnits::pct);
     BackLeft.spin(directionType::fwd, driveL, velocityUnits::pct);
     FrontRight.spin(directionType::fwd, driveR, velocityUnits::pct);
     FrontLeft.spin(directionType::fwd, driveL, velocityUnits::pct);
+    MidLeft.spin(directionType::fwd, driveL, velocityUnits::pct);
+    MidRight.spin(directionType::fwd, driveR, velocityUnits::pct);
 
     wait(10, msec);
   }
@@ -179,6 +182,9 @@ void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
   BackLeft.stop(brakeType::brake);
   FrontRight.stop(brakeType::brake);
   FrontLeft.stop(brakeType::brake);
+  MidLeft.stop(brakeType::brake);
+  MidRight.stop(brakeType::brake);
+
   pClaw(CLOSE);
 }
 

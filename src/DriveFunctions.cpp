@@ -282,7 +282,7 @@ void moveRotate(int16_t degrees, int velocity, uint32_t timeOut)
       BackLeft.spin(forward, 12 * motorPower, voltageUnits::volt);
       BackRight.spin(reverse, 12 * motorPower, voltageUnits::volt);
 
-      MidLeft.spin(reverse, 12 * motorPower, voltageUnits::volt);
+      MidLeft.spin(forward, 12 * motorPower, voltageUnits::volt);
       MidRight.spin(reverse, 12 * motorPower, voltageUnits::volt);
     #elif defined CHASSIS_2_MOTOR_INLINE
       DriveRight.spin(reverse, 12 * motorPower, voltageUnits::volt);

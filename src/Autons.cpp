@@ -117,9 +117,11 @@ void Auton4()
   setLinGains(75, 0, 0, 20, 10);
   setRotGains(0.03, 0, 0, 20, 10);
   
-  goalApproach(SIGYELLOW, 90, 1200);
+  goalApproach(SIGYELLOW, 90, 12000);
+
   moveLinear(-55, 100, 3000);
   moveStop(brake);
   wait(500, msec);
   pClaw(OPEN);
 }
+

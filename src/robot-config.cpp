@@ -18,7 +18,8 @@ pneumatics Pincher = pneumatics(Brain.ThreeWirePort.E);
 
 pot armPot = pot(Brain.ThreeWirePort.D);
 pot forkLiftPot = pot(Brain.ThreeWirePort.A);
-bumper clawBumper = bumper(Brain.ThreeWirePort.B);
+//bumper clawBumper = bumper(Brain.ThreeWirePort.B);
+distance clawDistance(PORT13);
 gps GPS = gps(PORT3);
 pneumatics clampBack = pneumatics(Brain.ThreeWirePort.F);
 

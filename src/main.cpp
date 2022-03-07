@@ -127,7 +127,7 @@ void usercontrol(void) {
 
     // forklift potentiometer
     // fork up
-    if (Controller1.ButtonX.pressing()) {
+    if (Controller1.ButtonDown.pressing()) {
       pClampBack(CLOSE);
     }
     // fork down

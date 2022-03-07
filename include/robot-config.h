@@ -17,6 +17,7 @@ extern pneumatics Pincher;
 extern pot armPot;
 extern pot forkLiftPot;
 extern bumper clawBumper;
+extern distance clawDistance;
 extern gps GPS;
 extern pneumatics clampBack;
 
