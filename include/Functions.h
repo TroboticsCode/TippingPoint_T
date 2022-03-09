@@ -26,8 +26,8 @@ void claw(bool open);
 void pClaw(bool open);
 void pClampBack(bool open);
 void moveArm(int32_t target);
-void goalCenter(int color);
-void goalApproach(int color, uint8_t vel, uint64_t timeOut);
+void goalCenter(vision *cam, vision::signature sig);
+void goalApproach(uint8_t vel, uint64_t timeOut, vision *cam, vision::signature sig);
 int pidArmTask(void);
 
 #endif

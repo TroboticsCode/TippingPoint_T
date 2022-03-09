@@ -1,8 +1,9 @@
 #include "functions.h"
 #include "DriveFunctionsConfig.h"
 #include "PID.h"
-#include "Vision.h"
 #include "vex.h"
+#include "Vision.h"
+#include "Vision2.h"
 
 #define CENTER_X 316 / 2.0f
 #define CENTER_Y 212 / 2.0f
@@ -29,7 +30,7 @@ void arm(int angle) {
   float motorRotation = angle * -7;
   LifterMotorL.rotateTo(motorRotation, degrees, false);
   LifterMotorR.rotateTo(motorRotation, degrees, true);
-
+  
   LifterMotorL.stop();
   LifterMotorR.stop();
 }
@@ -38,60 +39,62 @@ void pClaw(bool open) { Pincher.set(open); }
 
 void pClampBack(bool open) { clampBack.set(!open); }
 
-void goalCenter(int color) {
+void goalCenter(vision *cam, vision::signature sig) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting ball center routine");
   Brain.Screen.setCursor(6, 1);
   Brain.Screen.clearLine();
-  Brain.Screen.print("Cam status: %d", Vision.installed());
+  Brain.Screen.print("Cam status: %d", cam->installed());
 
-  if (color == SIGRED)
-    Vision.takeSnapshot(REDSIG);
-  else if (color == SIGBLUE)
-    Vision.takeSnapshot(BLUESIG);
-  else if (color == SIGYELLOW)
-    Vision.takeSnapshot(YELLOWSIG);
-
-  int objectCenter = Vision.largestObject.centerX;
+  cam->takeSnapshot(sig);
+  int objectCenter = cam->largestObject.centerX;
 
   while ((objectCenter > CENTER_X + 5) || (objectCenter < CENTER_X - 5)) {
-    if (color == SIGRED)
-      Vision.takeSnapshot(REDSIG);
-    else if (color == SIGBLUE)
-      Vision.takeSnapshot(BLUESIG);
-    else if (color == SIGYELLOW)
-      Vision.takeSnapshot(YELLOWSIG);
+    cam->takeSnapshot(sig);
 
-    objectCenter = Vision.largestObject.centerX;
+    objectCenter = cam->largestObject.centerX;
     Brain.Screen.setCursor(2, 2);
     Brain.Screen.clearLine();
     Brain.Screen.print(objectCenter);
+    Brain.Screen.newLine();
 
-    if (Vision.objectCount > 0) {
+    if (cam->objectCount > 0) {
       if (objectCenter < CENTER_X - 10) {
         Brain.Screen.print("turn right");
         BackRight.spin(directionType::fwd, 15, velocityUnits::pct);
         BackLeft.spin(directionType::rev, 15, velocityUnits::pct);
         FrontRight.spin(directionType::fwd, 15, velocityUnits::pct);
         FrontLeft.spin(directionType::rev, 15, velocityUnits::pct);
-      } else if (objectCenter > CENTER_X + 10) {
+        MidLeft.spin(directionType::rev, 15, velocityUnits::pct);
+        MidRight.spin(directionType::fwd, 15, velocityUnits::pct);
+      } 
+      else if (objectCenter > CENTER_X + 10) {
         Brain.Screen.print("turn left ");
         BackRight.spin(directionType::rev, 15, velocityUnits::pct);
         BackLeft.spin(directionType::fwd, 15, velocityUnits::pct);
         FrontRight.spin(directionType::rev, 15, velocityUnits::pct);
         FrontLeft.spin(directionType::fwd, 15, velocityUnits::pct);
-      } else {
+        MidLeft.spin(directionType::fwd, 15, velocityUnits::pct);
+        MidRight.spin(directionType::rev, 15, velocityUnits::pct);
+      } 
+      else {
         Brain.Screen.print("Dont move");
         BackRight.stop();
         BackLeft.stop();
         FrontRight.stop();
         FrontLeft.stop();
+
+        MidLeft.stop();
+        MidRight.stop();
       }
     } else {
       moveStop(brake);
       Brain.Screen.clearLine();
       Brain.Screen.print("No object detected");
     }
+    Brain.Screen.setCursor(3, 2);
+    Brain.Screen.clearLine();
+    Brain.Screen.print("Center: %d", objectCenter);
   }
   Brain.Screen.newLine();
   Brain.Screen.print("DONE");
@@ -99,9 +102,11 @@ void goalCenter(int color) {
   BackLeft.stop(brakeType::brake);
   FrontRight.stop(brakeType::brake);
   FrontLeft.stop(brakeType::brake);
+  MidLeft.stop(brakeType::brake);
+  MidRight.stop(brakeType::brake);
 }
 
-void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
+void goalApproach(uint8_t vel, uint64_t timeOut, vision *cam, vision::signature sig) {
   Brain.Screen.setCursor(1, 1);
   Brain.Screen.print("Starting goal approach routine");
 
@@ -109,6 +114,8 @@ void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
   BackLeft.resetPosition();
   FrontRight.resetPosition();
   FrontLeft.resetPosition();
+  MidLeft.resetPosition();
+  MidRight.resetPosition();
 
   const uint8_t defPower = vel;
 
@@ -124,15 +131,11 @@ void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
 
   while ((clawDistance.objectDistance(inches) > 0.75) &&
          (Brain.timer(timeUnits::msec) - startTime < timeOut)) {
-    if (color == SIGRED)
-      Vision.takeSnapshot(REDSIG);
-    else if (color == SIGBLUE)
-      Vision.takeSnapshot(BLUESIG);
-    else if (color == SIGYELLOW)
-      Vision.takeSnapshot(YELLOWSIG);
+    
+    cam->takeSnapshot(sig);
 
     // take snapshot of color
-    objectCenter = Vision.largestObject.centerX;
+    objectCenter = cam->largestObject.centerX;
 
     driveL = defPower;
     driveR = defPower;
@@ -145,7 +148,7 @@ void goalApproach(int color, uint8_t vel, uint64_t timeOut) {
       correction = defPower;
 
     // apply correction to drive output
-    if (Vision.objectCount > 0) {
+    if (cam->objectCount > 0) {
       if (objectCenter < CENTER_X - 5) {
         driveL -= correction;
       } else if (objectCenter > CENTER_X + 5) {

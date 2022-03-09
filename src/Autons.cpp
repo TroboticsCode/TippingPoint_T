@@ -3,6 +3,9 @@
 #include "Functions.h"
 #include "vex.h"
 #include "gps.h"
+//#include "Vision.h"
+//#include "Vision2.h"
+#include "visionSigs.h"
 
 // Put your auton routines in here
 
@@ -49,7 +52,7 @@ void Auton1() // skills
 
   // wait(1, seconds);
   // moveRotate(-51, 25, 3000); // rotates towards another goal
-  goalCenter(SIGBLUE);
+  goalCenter(&Vision, BLUESIG);
   moveStop(hold);
 
   wait(1, seconds);
@@ -62,7 +65,7 @@ void Auton1() // skills
   //goalApproach(SIGBLUE, 50, 6000);
   for(int i = 0; i < 5; i++)
   {
-    goalCenter(SIGBLUE);
+    goalCenter(&Vision, BLUESIG);
   }
   moveLinear(72, 100, 4000);
   moveLinear(-190, 100, 4000);
@@ -109,7 +112,7 @@ void Auton3() //programming skills
   movePoint(24, 24);*/
 
   while(1)
-    goalCenter(SIGBLUE);
+    goalCenter(&Vision2, BLUESIG2);
 }
 
 void Auton4() 
@@ -117,11 +120,18 @@ void Auton4()
   setLinGains(75, 0, 0, 20, 10);
   setRotGains(0.03, 0, 0, 20, 10);
   
-  goalApproach(SIGYELLOW, 90, 12000);
+  goalApproach(90, 12000, &Vision, YELLOWSIG);
 
-  moveLinear(-55, 100, 3000);
+  moveLinear(-24, 100, 3000);
   moveStop(brake);
+  moveRotate(-90, 60, 3000);
+
+  goalCenter(&Vision2, BLUESIG);
+
+  moveLinear(-18, 100, 3000);
+  pClampBack(OPEN);
+  moveLinear(24, 100, 3000);
+  arm(15);
   wait(500, msec);
-  pClaw(OPEN);
 }
 
