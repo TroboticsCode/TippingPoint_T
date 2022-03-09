@@ -8,7 +8,7 @@
 #define CENTER_X 316 / 2.0f
 #define CENTER_Y 212 / 2.0f
 
-uint16_t armAngles[] = {492, 670, 800};
+uint16_t armAngles[] = {492, 520, 670, 800};
 uint8_t armAngleIndex = 0;
 pidStruct_t armPID;
 
@@ -49,7 +49,7 @@ void goalCenter(vision *cam, vision::signature sig) {
   cam->takeSnapshot(sig);
   int objectCenter = cam->largestObject.centerX;
 
-  while ((objectCenter > CENTER_X + 5) || (objectCenter < CENTER_X - 5)) {
+  while (((objectCenter > CENTER_X + 5) || (objectCenter < CENTER_X - 5)) && cam->objectCount > 0) {
     cam->takeSnapshot(sig);
 
     objectCenter = cam->largestObject.centerX;

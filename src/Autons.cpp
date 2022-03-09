@@ -120,18 +120,26 @@ void Auton4()
   setLinGains(75, 0, 0, 20, 10);
   setRotGains(0.03, 0, 0, 20, 10);
   
-  goalApproach(90, 12000, &Vision, YELLOWSIG);
+  vex::task armTask(pidArmTask); //this will run in the background to keep the arm in position
+  armAngleIndex = 0; //update index to move arm to new position
 
-  moveLinear(-24, 100, 3000);
+  goalApproach(90, 1200, &Vision, YELLOWSIG);
+  //we have the yellow goal, now lift the arm
+  //armAngleIndex = 1;
+
+  moveLinear(-20, 100, 3000);
   moveStop(brake);
-  moveRotate(-90, 60, 3000);
+  moveRotate(-80, 60, 3000);
 
-  goalCenter(&Vision2, BLUESIG);
+  goalCenter(&Vision2, BLUESIG2); //must use sig 2's with vision2, center on next goal
 
-  moveLinear(-18, 100, 3000);
-  pClampBack(OPEN);
-  moveLinear(24, 100, 3000);
-  arm(15);
+  moveLinear(-18, 100, 3000); //back into goal
+  pClampBack(OPEN); //grab
+  moveLinear(24, 100, 3000); //move away from line
+  //arm(15);
+  armAngleIndex = 2; //update arm angles in the functions.cpp file
   wait(500, msec);
+
+  armTask.stop(); //make sure to kill the arm control
 }
 
