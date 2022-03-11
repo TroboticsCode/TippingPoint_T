@@ -27,10 +27,11 @@ void testPID() {
 }
 
 void arm(int angle) {
-  float motorRotation = angle * -7;
-  LifterMotorL.rotateTo(motorRotation, degrees, false);
-  LifterMotorR.rotateTo(motorRotation, degrees, true);
   
+  float motorRotation = angle * 7;
+  LifterMotorL.rotateFor(motorRotation, degrees, false);
+  LifterMotorR.rotateFor(motorRotation, degrees, true);
+
   LifterMotorL.stop();
   LifterMotorR.stop();
 }
